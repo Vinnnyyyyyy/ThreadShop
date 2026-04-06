@@ -1,42 +1,44 @@
-{{-- Reusable form fields for Create and Edit --}}
+{{-- Reusable form fields --}}
 
-<div class="mb-3">
-    <label class="form-label">Product Name *</label>
-    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+<div class="mb-4">
+    <label class="block text-zinc-300 font-semibold mb-1">Product Name *</label>
+    <input type="text" name="name"
+           class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('name') border-red-500 @enderror"
            value="{{ old('name', $product->name ?? '') }}" required>
-    @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
 </div>
 
-<div class="mb-3">
-    <label class="form-label">Description *</label>
+<div class="mb-4">
+    <label class="block text-zinc-300 font-semibold mb-1">Description *</label>
     <textarea name="description" rows="3"
-              class="form-control @error('description') is-invalid @enderror"
+              class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('description') border-red-500 @enderror"
               required>{{ old('description', $product->description ?? '') }}</textarea>
-    @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    @error('description') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
 </div>
 
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Price (₱) *</label>
+<div class="grid grid-cols-2 gap-4 mb-4">
+    <div>
+        <label class="block text-zinc-300 font-semibold mb-1">Price (₱) *</label>
         <input type="number" step="0.01" name="price"
-               class="form-control @error('price') is-invalid @enderror"
+               class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('price') border-red-500 @enderror"
                value="{{ old('price', $product->price ?? '') }}" required>
-        @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        @error('price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
-
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Stock *</label>
+    <div>
+        <label class="block text-zinc-300 font-semibold mb-1">Stock *</label>
         <input type="number" name="stock"
-               class="form-control @error('stock') is-invalid @enderror"
+               class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('stock') border-red-500 @enderror"
                value="{{ old('stock', $product->stock ?? 0) }}" required>
-        @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        @error('stock') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Category *</label>
-        <select name="category" class="form-select @error('category') is-invalid @enderror" required>
+<div class="grid grid-cols-2 gap-4 mb-4">
+    <div>
+        <label class="block text-zinc-300 font-semibold mb-1">Category *</label>
+        <select name="category"
+                class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('category') border-red-500 @enderror"
+                required>
             <option value="">Select...</option>
             @foreach(['Men', 'Women', 'Kids', 'Unisex'] as $cat)
                 <option value="{{ $cat }}" {{ old('category', $product->category ?? '') == $cat ? 'selected' : '' }}>
@@ -44,12 +46,13 @@
                 </option>
             @endforeach
         </select>
-        @error('category') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        @error('category') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
-
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Size *</label>
-        <select name="size" class="form-select @error('size') is-invalid @enderror" required>
+    <div>
+        <label class="block text-zinc-300 font-semibold mb-1">Size *</label>
+        <select name="size"
+                class="w-full bg-[#111111] border border-zinc-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('size') border-red-500 @enderror"
+                required>
             <option value="">Select...</option>
             @foreach(['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Free Size'] as $size)
                 <option value="{{ $size }}" {{ old('size', $product->size ?? '') == $size ? 'selected' : '' }}>
@@ -57,19 +60,19 @@
                 </option>
             @endforeach
         </select>
-        @error('size') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        @error('size') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
 </div>
 
-<div class="mb-3">
-    <label class="form-label">Product Image</label>
-    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
-    @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+<div class="mb-6">
+    <label class="block text-zinc-300 font-semibold mb-1">Product Image</label>
+    <input type="file" name="image" accept="image/*"
+           class="w-full bg-[#111111] border border-zinc-700 text-zinc-300 px-4 py-2 rounded-lg focus:outline-none focus:border-[#ffaa00] @error('image') border-red-500 @enderror">
+    @error('image') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
 
-    {{-- Show current image on edit --}}
     @if(!empty($product->image))
         <img src="{{ asset('storage/' . $product->image) }}"
-             class="mt-2 rounded" style="height:100px;" alt="current image">
-        <p class="text-muted small mt-1">Leave blank to keep current image.</p>
+             class="mt-3 h-24 rounded-lg border border-zinc-700" alt="current image">
+        <p class="text-zinc-500 text-xs mt-1">Leave blank to keep current image.</p>
     @endif
 </div>

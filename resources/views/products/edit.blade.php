@@ -2,25 +2,26 @@
 
 @section('content')
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">✏️ Edit Product: {{ $product->name }}</h5>
+<div class="max-w-2xl mx-auto">
+    <h2 class="brand-font text-4xl text-[#ffaa00] tracking-widest mb-6">EDIT PRODUCT</h2>
+    <p class="text-zinc-400 mb-6">Editing: <span class="text-white font-bold">{{ $product->name }}</span></p>
+
+    <div class="bg-[#1a1a1a] border border-zinc-800 rounded-xl p-6">
+        <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            @include('products._form')
+            <div class="flex gap-3">
+                <button type="submit"
+                        class="bg-[#ffaa00] text-black font-black px-8 py-2 rounded-lg hover:bg-yellow-300 transition">
+                    Update Product
+                </button>
+                <a href="{{ route('home') }}"
+                   class="border border-zinc-600 text-zinc-300 font-bold px-6 py-2 rounded-lg hover:border-white hover:text-white transition">
+                    Cancel
+                </a>
             </div>
-            <div class="card-body">
-                {{-- Use POST + @method('PUT') to simulate PUT request --}}
-                <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    @include('products._form')
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">Update Product</button>
-                        <a href="{{ route('home') }}" class="btn btn-outline-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 

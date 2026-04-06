@@ -4,172 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThreadShop – Clothing Marketplace</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#ffaa00',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #ff8c00;
-            --dark: #111111;
-            --card-bg: #1a1a1a;
-            --text: #ffffff;
-            --muted: #aaaaaa;
-        }
-
-        body {
-            background: var(--dark);
-            color: var(--text);
-            font-family: 'Oswald', sans-serif;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: #000 !important;
-            border-bottom: 2px solid var(--primary);
-        }
-        .navbar-brand {
-            color: var(--primary) !important;
-            font-weight: 900;
-            font-size: 1.8rem;
-            letter-spacing: 2px;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 10px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-        .card-img-top {
-            height: 220px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-        .card-body { color: var(--text); }
-        .card-footer {
-            background: #222;
-            border-top: 1px solid #333;
-        }
-
-        /* Buttons */
-        .btn-primary, .btn-dark {
-            background: var(--primary) !important;
-            border-color: var(--primary) !important;
-            color: #000 !important;
-            font-weight: 700;
-        }
-        .btn-primary:hover, .btn-dark:hover {
-            background: #cc5200 !important;
-        }
-        .btn-warning {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: #000;
-            font-weight: 700;
-        }
-        .btn-outline-dark {
-            border-color: var(--primary) !important;
-            color: var(--primary) !important;
-        }
-        .btn-outline-dark:hover {
-            background: var(--primary) !important;
-            color: #000 !important;
-        }
-
-        /* Form controls */
-        .form-control, .form-select {
-            background: #222;
-            border: 1px solid #444;
-            color: var(--text);
-        }
-        .form-control:focus, .form-select:focus {
-            background: #222;
-            border-color: var(--primary);
-            color: var(--text);
-            box-shadow: 0 0 0 0.2rem rgba(255,102,0,0.25);
-        }
-        .form-select option { background: #222; }
-
-        /* Text */
-        .text-muted { color: var(--muted) !important; }
-        .text-success { color: var(--primary) !important; }
-
-        /* Alert */
-        .alert-success {
-            background: #1a1a1a;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-
-        /* Table (cart) */
-        .table {
-            color: var(--text);
-            background: var(--card-bg);
-        }
-        .table-dark { background: #000; }
-        .table-bordered td, .table-bordered th {
-            border-color: #333;
-        }
-
-        /* Badge */
-        .badge.bg-secondary {
-            background: var(--primary) !important;
-            color: #000;
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            border-top: 2px solid var(--primary);
-            color: var(--muted);
-        }
-
-        /* Pagination */
-        .pagination .page-link {
-            background: #222;
-            border-color: #444;
-            color: var(--primary);
-        }
-        .pagination .page-item.active .page-link {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: #000;
-        }
+        body { font-family: 'Barlow', sans-serif; }
+        .brand-font { font-family: 'Bebas Neue', sans-serif; }
+        .card-hover { transition: transform 0.2s ease, border-color 0.2s ease; }
+        .card-hover:hover { transform: translateY(-5px); border-color: #ffaa00 !important; }
     </style>
 </head>
-<body>
+<body class="bg-[#111111] text-white min-h-screen">
 
-<nav class="navbar navbar-expand-lg mb-4 shadow">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">👕 THREADSHOP</a>
-        <div class="d-flex gap-2">
-            <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm">+ Add Product</a>
-            <a href="{{ route('cart.index') }}" class="btn btn-warning btn-sm">
+<!-- Navbar -->
+<nav class="bg-black border-b-2 border-[#ffaa00] sticky top-0 z-50 shadow-xl">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="{{ route('home') }}"
+           class="brand-font text-[#ffaa00] text-4xl tracking-widest hover:text-yellow-300 transition">
+            👕 THREADSHOP
+        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('products.create') }}"
+               class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
+                + Add Product
+            </a>
+            <a href="{{ route('cart.index') }}"
+               class="border-2 border-[#ffaa00] text-[#ffaa00] font-bold text-sm px-5 py-2 rounded-lg hover:bg-[#ffaa00] hover:text-black transition">
                 🛒 Cart ({{ count(session()->get('cart', [])) }})
             </a>
         </div>
     </div>
 </nav>
 
-<div class="container">
+<!-- Page Content -->
+<div class="max-w-7xl mx-auto px-6 mt-6">
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="bg-[#1a1a1a] border border-[#ffaa00] text-[#ffaa00] px-4 py-3 rounded-lg flex justify-between items-center mb-5">
+            <span>✅ {{ session('success') }}</span>
+            <button onclick="this.parentElement.remove()" class="text-zinc-400 hover:text-white text-xl font-bold">&times;</button>
         </div>
     @endif
 
     @yield('content')
 </div>
 
-<footer class="text-center py-4 mt-5">
-    <p class="mb-0">&copy; {{ date('Y') }} ThreadShop. All rights reserved.</p>
+<!-- Footer -->
+<footer class="bg-black border-t border-zinc-800 text-center py-8 mt-16">
+    <p class="brand-font text-[#ffaa00] text-2xl tracking-widest mb-1">THREADSHOP</p>
+    <p class="text-zinc-500 text-sm">&copy; {{ date('Y') }} ThreadShop. All rights reserved.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
