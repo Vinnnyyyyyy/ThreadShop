@@ -6,17 +6,6 @@
     <title>ThreadShop – Clothing Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: '#ffaa00',
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         body { font-family: 'Barlow', sans-serif; }
         .brand-font { font-family: 'Bebas Neue', sans-serif; }
@@ -29,25 +18,64 @@
 <!-- Navbar -->
 <nav class="bg-black border-b-2 border-[#ffaa00] sticky top-0 z-50 shadow-xl">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        {{-- Logo --}}
         <a href="{{ route('home') }}"
            class="brand-font text-[#ffaa00] text-4xl tracking-widest hover:text-yellow-300 transition">
             👕 THREADSHOP
         </a>
+
+        {{-- Nav Links --}}
         <div class="flex items-center gap-3">
-            <a href="{{ route('products.create') }}"
-               class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
-                + Add Product
-            </a>
-            <a href="{{ route('cart.index') }}"
-               class="border-2 border-[#ffaa00] text-[#ffaa00] font-bold text-sm px-5 py-2 rounded-lg hover:bg-[#ffaa00] hover:text-black transition">
-                🛒 Cart ({{ count(session()->get('cart', [])) }})
-            </a>
+
+            @auth
+                {{-- Logged in --}}
+                <a href="{{ route('products.create') }}"
+                   class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
+                    + Add Product
+                </a>
+
+                <a href="{{ route('cart.index') }}"
+                   class="border-2 border-[#ffaa00] text-[#ffaa00] font-bold text-sm px-5 py-2 rounded-lg hover:bg-[#ffaa00] hover:text-black transition">
+                    🛒 Cart ({{ count(session()->get('cart', [])) }})
+                </a>
+
+                {{-- User Dropdown --}}
+                <div class="relative group">
+                    <button class="flex items-center gap-2 bg-zinc-800 border border-zinc-700 text-white text-sm font-bold px-4 py-2 rounded-lg hover:border-[#ffaa00] transition">
+                        👤 {{ Auth::user()->name }}
+                        <span class="text-zinc-400 text-xs">▼</span>
+                    </button>
+                    {{-- Dropdown Menu --}}
+                    <div class="absolute right-0 mt-2 w-44 bg-[#1a1a1a] border border-zinc-700 rounded-xl shadow-xl hidden group-hover:block z-50">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full text-left px-4 py-3 text-red-400 hover:bg-zinc-800 hover:text-red-300 transition rounded-xl text-sm font-semibold">
+                                🚪 Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            @else
+                {{-- Not logged in --}}
+                <a href="{{ route('login') }}"
+                   class="border border-zinc-600 text-zinc-300 font-bold text-sm px-5 py-2 rounded-lg hover:border-[#ffaa00] hover:text-[#ffaa00] transition">
+                    Login
+                </a>
+                <a href="{{ route('register') }}"
+                   class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
+                    Sign Up
+                </a>
+            @endauth
+
         </div>
     </div>
 </nav>
 
-<!-- Page Content -->
-<div class="max-w-7xl mx-auto px-6 mt-6">
+<!-- Flash Message -->
+<div class="max-w-7xl mx-auto px-6 mt-5">
     @if(session('success'))
         <div class="bg-[#1a1a1a] border border-[#ffaa00] text-[#ffaa00] px-4 py-3 rounded-lg flex justify-between items-center mb-5">
             <span>✅ {{ session('success') }}</span>
