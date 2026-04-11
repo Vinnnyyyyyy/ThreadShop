@@ -46,17 +46,19 @@
                         👤 {{ Auth::user()->name }}
                         <span class="text-zinc-400 text-xs">▼</span>
                     </button>
-                    {{-- Dropdown Menu --}}
-                    <div class="absolute right-0 mt-2 w-44 bg-[#1a1a1a] border border-zinc-700 rounded-xl shadow-xl hidden group-hover:block z-50">
+                {{-- Invisible bridge to prevent gap --}}
+                <div class="absolute right-0 w-44 pt-2 hidden group-hover:block z-50">
+                    <div class="bg-[#1a1a1a] border border-zinc-700 rounded-xl shadow-xl">
                         <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit"
-                                    class="w-full text-left px-4 py-3 text-red-400 hover:bg-zinc-800 hover:text-red-300 transition rounded-xl text-sm font-semibold">
-                                🚪 Logout
-                            </button>
+                             @csrf
+                                <button type="submit"
+                        class="w-full text-left px-4 py-3 text-red-400 hover:bg-zinc-800 hover:text-red-300 transition rounded-xl text-sm font-semibold">
+                        🚪 Logout
+                    </button>
                         </form>
                     </div>
                 </div>
+        </div>
 
             @else
                 {{-- Not logged in --}}
