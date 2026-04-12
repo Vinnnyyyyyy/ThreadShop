@@ -20,21 +20,24 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {{-- Logo --}}
-        <a href="{{ route('home') }}"
-           class="brand-font text-[#ffaa00] text-4xl tracking-widest hover:text-yellow-300 transition">
-            👕 THREADSHOP
-        </a>
+            <a href="{{ route('home') }}" class="flex items-center gap-3 hover:opacity-80 transition">
+                <img src="{{ asset('images/logo.png') }}" alt="ThreadShop Logo" class="h-12 w-12 rounded-full">
+                <span class="brand-font text-[#ffaa00] text-4xl tracking-widest">THREADSHOP</span>
+            </a>
 
         {{-- Nav Links --}}
         <div class="flex items-center gap-3">
 
             @auth
-                {{-- Logged in --}}
-                <a href="{{ route('products.create') }}"
-                   class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
-                    + Add Product
-                </a>
+                {{-- Admin only: Add Product button --}}
+                @if(Auth::user()->role === 'admin')
+                    <a href="{{ route('products.create') }}"
+                       class="bg-[#ffaa00] text-black font-bold text-sm px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
+                        + Add Product
+                    </a>
+                @endif
 
+                {{-- Cart - for all logged in users --}}
                 <a href="{{ route('cart.index') }}"
                    class="border-2 border-[#ffaa00] text-[#ffaa00] font-bold text-sm px-5 py-2 rounded-lg hover:bg-[#ffaa00] hover:text-black transition">
                     🛒 Cart ({{ count(session()->get('cart', [])) }})
@@ -44,21 +47,24 @@
                 <div class="relative group">
                     <button class="flex items-center gap-2 bg-zinc-800 border border-zinc-700 text-white text-sm font-bold px-4 py-2 rounded-lg hover:border-[#ffaa00] transition">
                         👤 {{ Auth::user()->name }}
+                        @if(Auth::user()->role === 'admin')
+                            <span class="bg-[#ffaa00] text-black text-xs font-black px-2 py-0.5 rounded-full">ADMIN</span>
+                        @endif
                         <span class="text-zinc-400 text-xs">▼</span>
                     </button>
-                {{-- Invisible bridge to prevent gap --}}
-                <div class="absolute right-0 w-44 pt-2 hidden group-hover:block z-50">
-                    <div class="bg-[#1a1a1a] border border-zinc-700 rounded-xl shadow-xl">
-                        <form method="POST" action="{{ route('logout') }}">
-                             @csrf
+                    {{-- Invisible bridge to prevent gap --}}
+                    <div class="absolute right-0 w-44 pt-2 hidden group-hover:block z-50">
+                        <div class="bg-[#1a1a1a] border border-zinc-700 rounded-xl shadow-xl">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
                                 <button type="submit"
-                        class="w-full text-left px-4 py-3 text-red-400 hover:bg-zinc-800 hover:text-red-300 transition rounded-xl text-sm font-semibold">
-                        🚪 Logout
-                    </button>
-                        </form>
+                                        class="w-full text-left px-4 py-3 text-red-400 hover:bg-zinc-800 hover:text-red-300 transition rounded-xl text-sm font-semibold">
+                                    🚪 Logout
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-        </div>
 
             @else
                 {{-- Not logged in --}}

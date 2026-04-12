@@ -17,8 +17,9 @@
 
     {{-- Logo --}}
     <div class="text-center mb-8">
-        <a href="/" class="brand-font text-[#ffaa00] text-5xl tracking-widest">
-            👕 THREADSHOP
+        <a href="/" class="flex items-center justify-center gap-3 hover:opacity-80 transition">
+            <img src="/images/logo.png" alt="ThreadShop Logo" class="h-14 w-14 rounded-full">
+            <span class="brand-font text-[#ffaa00] text-5xl tracking-widest">THREADSHOP</span>
         </a>
         <p class="text-zinc-400 mt-2">Create your account to start shopping.</p>
     </div>
