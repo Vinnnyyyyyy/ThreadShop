@@ -33,34 +33,48 @@
         <p class="text-zinc-300 mb-4">{{ $product->description }}</p>
         <p class="text-zinc-500 text-sm mb-6">Available Stock: {{ $product->stock }}</p>
 
-        {{-- Add to Cart --}}
-        @if($product->stock > 0)
-            <form action="{{ route('cart.add', $product) }}" method="POST" class="mb-4">
-                @csrf
-                <button class="w-full bg-[#ffaa00] text-black font-black text-lg py-3 rounded-xl hover:bg-yellow-300 transition">
-                    🛒 Add to Cart
+        {{-- Add to Cart - for logged in users only --}}
+        @auth
+            @if($product->stock > 0)
+                <form action="{{ route('cart.add', $product) }}" method="POST" class="mb-4">
+                    @csrf
+                    <button class="w-full bg-[#ffaa00] text-black font-black text-lg py-3 rounded-xl hover:bg-yellow-300 transition">
+                        🛒 Add to Cart
+                    </button>
+                </form>
+            @else
+                <button disabled class="w-full bg-zinc-700 text-zinc-400 font-black text-lg py-3 rounded-xl cursor-not-allowed">
+                    Out of Stock
                 </button>
-            </form>
+            @endif
         @else
-            <button disabled class="w-full bg-zinc-700 text-zinc-400 font-black text-lg py-3 rounded-xl cursor-not-allowed">
-                Out of Stock
-            </button>
-        @endif
-
-        <div class="flex gap-3 mt-3">
-            <a href="{{ route('products.edit', $product) }}"
-               class="flex-1 text-center border border-zinc-600 text-zinc-300 font-bold py-2 rounded-lg hover:border-white hover:text-white transition">
-                Edit
+            {{-- Guest - show login prompt --}}
+            <a href="{{ route('login') }}"
+               class="w-full text-center bg-zinc-800 border border-[#ffaa00] text-[#ffaa00] font-black text-lg py-3 rounded-xl hover:bg-[#ffaa00] hover:text-black transition mb-4 block">
+                Login to Add to Cart
             </a>
-            <form action="{{ route('products.destroy', $product) }}" method="POST"
-                  onsubmit="return confirm('Delete this product?')" class="flex-1">
-                @csrf
-                @method('DELETE')
-                <button class="w-full border border-red-700 text-red-500 font-bold py-2 rounded-lg hover:bg-red-700 hover:text-white transition">
-                    Delete
-                </button>
-            </form>
-        </div>
+        @endauth
+
+        {{-- Admin only - Edit and Delete --}}
+        @auth
+            @if(Auth::user()->role === 'admin')
+                <div class="flex gap-3 mt-3">
+                    <a href="{{ route('products.edit', $product) }}"
+                       class="flex-1 text-center border border-zinc-600 text-zinc-300 font-bold py-2 rounded-lg hover:border-white hover:text-white transition">
+                        Edit
+                    </a>
+                    <form action="{{ route('products.destroy', $product) }}" method="POST"
+                          onsubmit="return confirm('Delete this product?')" class="flex-1">
+                        @csrf
+                        @method('DELETE')
+                        <button class="w-full border border-red-700 text-red-500 font-bold py-2 rounded-lg hover:bg-red-700 hover:text-white transition">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            @endif
+        @endauth
+
     </div>
 
 </div>

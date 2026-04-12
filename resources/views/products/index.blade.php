@@ -29,9 +29,14 @@
 @if($products->isEmpty())
     <div class="text-center py-20">
         <p class="text-zinc-500 text-xl">No products found.</p>
-        <a href="{{ route('products.create') }}" class="mt-4 inline-block bg-[#ffaa00] text-black font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition">
-            + Add First Product
-        </a>
+        @auth
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('products.create') }}"
+                   class="mt-4 inline-block bg-[#ffaa00] text-black font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition">
+                    + Add First Product
+                </a>
+            @endif
+        @endauth
     </div>
 @else
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -61,22 +66,31 @@
 
             {{-- Footer --}}
             <div class="px-4 pb-4 flex gap-2">
+
+                {{-- View - everyone can see --}}
                 <a href="{{ route('products.show', $product) }}"
                    class="flex-1 text-center border border-[#ffaa00] text-[#ffaa00] text-sm font-bold py-2 rounded-lg hover:bg-[#ffaa00] hover:text-black transition">
                     View
                 </a>
-                <a href="{{ route('products.edit', $product) }}"
-                   class="flex-1 text-center border border-zinc-600 text-zinc-300 text-sm font-bold py-2 rounded-lg hover:border-white hover:text-white transition">
-                    Edit
-                </a>
-                <form action="{{ route('products.destroy', $product) }}" method="POST"
-                      onsubmit="return confirm('Delete this product?')">
-                    @csrf
-                    @method('DELETE')
-                    <button class="border border-red-700 text-red-500 text-sm font-bold px-3 py-2 rounded-lg hover:bg-red-700 hover:text-white transition">
-                        Del
-                    </button>
-                </form>
+
+                {{-- Admin only - Edit and Delete --}}
+                @auth
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('products.edit', $product) }}"
+                           class="flex-1 text-center border border-zinc-600 text-zinc-300 text-sm font-bold py-2 rounded-lg hover:border-white hover:text-white transition">
+                            Edit
+                        </a>
+                        <form action="{{ route('products.destroy', $product) }}" method="POST"
+                              onsubmit="return confirm('Delete this product?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="border border-red-700 text-red-500 text-sm font-bold px-3 py-2 rounded-lg hover:bg-red-700 hover:text-white transition">
+                                Del
+                            </button>
+                        </form>
+                    @endif
+                @endauth
+
             </div>
 
         </div>
