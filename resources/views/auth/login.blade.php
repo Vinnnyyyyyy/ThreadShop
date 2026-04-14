@@ -10,6 +10,7 @@
         body { font-family: 'Barlow', sans-serif; }
         .brand-font { font-family: 'Bebas Neue', sans-serif; }
     </style>
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body class="bg-[#111111] text-white min-h-screen flex items-center justify-center">
 
