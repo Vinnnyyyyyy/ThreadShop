@@ -10,11 +10,13 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name'     => 'Admin',
-            'email'    => 'admin@threadshop.com',
-            'password' => Hash::make('admin123'),
-            'role'     => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@threadshop.com'],
+            [
+                'name'     => 'Admin',
+                'password' => Hash::make('admin123'),
+                'role'     => 'admin',
+            ]
+        );
     }
 }
