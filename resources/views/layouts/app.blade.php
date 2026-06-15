@@ -13,6 +13,7 @@
         .card-hover:hover { transform: translateY(-5px); border-color: #ffaa00 !important; }
     </style>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body class="bg-[#111111] text-white min-h-screen">
 
